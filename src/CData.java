@@ -4,16 +4,15 @@ import java.util.StringTokenizer;
 
 
 public class CData {
-    private String name, phone, email;
+    private  String name;
+    private String phone;
+    private String email;
 
-    int i= 0;//for default selection
+    String br = "Didio,03-8174-9123,rebbecca.didio@didio.com.au";
 
-    //Key string selected
-    String indexChar=indexSelection(i); // this 'i' INDEX SHOULD BE REPLACE WITH args[2] LATER FOR THE TEST@@
 
-    private CKey key = new CKey(indexChar);
 
-    String[] data = new String[3];
+    private CKey key;
 
     //Constructor
     public  CData(String _name, String _phone, String _email, int k){
@@ -21,21 +20,15 @@ public class CData {
         name = _name;
         phone= _phone;
         email= _email;
-
-    }
-
-    //Decide which data to use a keystring
-    public String indexSelection(int index){
-
-        if(index==1){
-            indexChar=phone;
-        }else if(index==0){
-            indexChar=email;
+        if (k==1){
+            key=new CKey(phone);
+        }else if(k==2){
+            key= new CKey(email);
         }else {
-            indexChar=name;
+            key=new CKey(name);
         }
-        return indexChar.toString();
     }
+
 
     public CKey getKey(){
         return key;
@@ -49,18 +42,25 @@ public class CData {
     }
 
 
-    public static void main(String[] args) {
 
-  /*      String s = new String("Didio,03-8174-9123,rebbecca.didio@didio.com.au");
-        String delims = ",\n";
-        StringTokenizer st = new StringTokenizer(s,delims);
-      String [] data;
-        while(st.hasMoreTokens()){
-            String t = st.nextToken();
 
-            System.out.print(" "+t);
 
-        }*/
+    public static void main(String [] args){
+        try{
 
+            String br = "Didio,03-8174-9123,rebbecca.didio@didio.com.au";
+            String delims = ",\n";
+                StringTokenizer st = new StringTokenizer(br,delims);
+                while(st.hasMoreTokens()){
+                    String t = st.nextToken();
+                    System.out.print(" "+t);
+
+                }
+                //System.out.println();
+        }catch(Exception e){
+            System.err.println("Trouble!");
+        }
     }
+
+
 }
