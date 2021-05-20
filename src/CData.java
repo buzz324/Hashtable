@@ -2,15 +2,11 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.StringTokenizer;
 
-
 public class CData {
+
     private  String name;
     private String phone;
     private String email;
-
-    String br = "Didio,03-8174-9123,rebbecca.didio@didio.com.au";
-
-
 
     private CKey key;
 
@@ -34,7 +30,6 @@ public class CData {
         return key;
     }
 
-
     public String ToString(){
         String threeElements = name +" "+ phone +" "+ email+" ";
 
@@ -42,25 +37,30 @@ public class CData {
     }
 
 
+    /*public static void main(String [] args){
 
-
-
-    public static void main(String [] args){
         try{
 
-            String br = "Didio,03-8174-9123,rebbecca.didio@didio.com.au";
+            String file ="src/AU.csv";
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String s=br.readLine();
             String delims = ",\n";
-                StringTokenizer st = new StringTokenizer(br,delims);
+            while(s!=null){
+                StringTokenizer st = new StringTokenizer(s,delims);
+                CData cd;
                 while(st.hasMoreTokens()){
                     String t = st.nextToken();
                     System.out.print(" "+t);
 
                 }
+                s=br.readLine();
                 //System.out.println();
+            }
         }catch(Exception e){
             System.err.println("Trouble!");
         }
-    }
+    }*/
 
 
 }
