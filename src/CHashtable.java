@@ -1,5 +1,3 @@
-import java.util.StringTokenizer;
-
 public class CHashtable {
 
     private CData[] table;//array of CData
@@ -9,7 +7,7 @@ public class CHashtable {
 
     private int capacity;
     private int numberOfCData;
-    private int probe;
+    private int probes;
 
     public CHashtable(int cap) {
         capacity = cap;
@@ -17,46 +15,91 @@ public class CHashtable {
     }
 
     //getter for the array
-    public CData[] arry(){
+    public CData[] arry() {
         return table;
     }
 
 
+
     //put data in the following key
-    //NEED ROBUSTNESS FOR FULL ARRAY
+    //NEED ROBUSTNESS FOR REDUNDANT CODING!!!!!!!!!!!!!
     public void put(CKey key, CData data) {
 
-        int uniqueCode;
+        int newKeyHashCode = key.hashCode();
 
-        //Hashtable is empty
-        if(get(key)==null){
-            //Empty so generate one
-            uniqueCode = key.hashCode();
-            System.out.println(uniqueCode);
-            table[uniqueCode] = data;
-
-        }
-        //new 'key' hash code is compared to the keystring inside the hashtable
-        else if(key.equals(get(key).getKey())) {
-
-            //Collision resolution for synonym implementation@@@@@@@@@
-            System.out.println("Synynom");
+        //Make sure the hashcode to stay within the index of the capacity array
+        if (newKeyHashCode>(capacity-1)){
+            newKeyHashCode=newKeyHashCode%(capacity);
         }
 
+        if(table[newKeyHashCode]==null){
+
+            table[newKeyHashCode]=data;
+
+        }else {
+
+
+            //Found a synonym
+            if (key.equals(table[newKeyHashCode].getKey())){
+                newKeyHashCode++;//increment to see next space availability
+
+            // Look for null space to add
+            while (table[newKeyHashCode]!=null){
+
+                newKeyHashCode++;
+
+                //check the hashcode hasn't exceed the max index and start prob from the start
+                if(newKeyHashCode>(capacity-1)){
+                    newKeyHashCode=0;
+                }
+
+            }
+                table[newKeyHashCode]=data; //Found a null spot to add
+
+            }else {
+                while (table[newKeyHashCode]!=null){
+
+                    newKeyHashCode++;
+
+                    //check the hashcode hasn't exceed the max index and start prob from the start
+                    if(newKeyHashCode>(capacity-1)){
+                        newKeyHashCode=0;
+                    }
+                }
+            }
+
+
+            table[newKeyHashCode]=data; //Found a null spot to add
+
+        }
     }
 
-    //find a data in the hashtable or empty space and return that value
-    public CData get(CKey key){
 
-        int hashcode= key.hashCode();
-        if (table[hashcode]==null){
+
+
+
+    //find a data in the hashtable or empty space and return that value
+    public CData get(CKey ck) {
+
+        int hashcode = ck.hashCode();
+        if (table[hashcode] == null) {
             return null;
-        }else {
+        } else {
             return table[hashcode];
         }
- }
+    }
 
-   /* public static void main(String[] args) {
+    //Tells how many data is stored in the hashtable
+    public int getProbes() {
+        for (int i = 0;i<table.length;i++){
+            if(table[i]!=null){
+                probes++;
+            }
+        }
+        return probes;
+    }
+
+    /* public static void main(String[] args) {
 
 
         CHashtable hs = new CHashtable(100);
@@ -85,8 +128,6 @@ public class CHashtable {
 
 
     }*/
-
-
 
 
 }

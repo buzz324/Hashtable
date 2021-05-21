@@ -37,7 +37,8 @@ public class CData {
     }
 
 
-    /*public static void main(String [] args){
+/*
+    public static void main(String [] args){
 
         try{
 
@@ -51,7 +52,7 @@ public class CData {
                 CData cd;
                 while(st.hasMoreTokens()){
                     String t = st.nextToken();
-                    System.out.print(" "+t);
+                    System.out.println(" "+t);
 
                 }
                 s=br.readLine();
@@ -60,7 +61,8 @@ public class CData {
         }catch(Exception e){
             System.err.println("Trouble!");
         }
-    }*/
+    }
+*/
 
 
 }

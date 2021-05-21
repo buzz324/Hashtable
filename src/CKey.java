@@ -32,27 +32,29 @@ public class CKey {
 public boolean equals(Object obj) {
 
         //check if the  location is same (default condition)
-    if (this == obj) {
-        System.out.println("SAME MEMORY LOCATION");
-        return true;
-    }
+    if (this == obj) return true;
+
 
     //Cast to Ckey for the super class obj
     CKey other = (CKey) obj;
 
-    //System.out.println(this.keystring+" "+other.keystring);
-    //Checking their actucal cKeystyring
-
     //see if the new Ckey hascode is the same as hashcode in hashtable
-    //true: found same hashcode-->synonym
-    return this.hashCode() == (other.hashCode());
-}
+    if(hashCode()!=other.hashCode()){
 
-    public static void main(String[] args) throws IOException {
+       //not a synonym but the other synonym has taken this spot already
+        return false;
+    }
+    //Synonym found
+    return true;
+    }
+
+
+   /* public static void main(String[] args) throws IOException {
 
 
         String file ="src/AU.csv";
         BufferedReader br = new BufferedReader(new FileReader(file));
+        String[] arr= new String[600];
 
         String s=br.readLine();
         String delims = ",\n";
@@ -73,16 +75,15 @@ public boolean equals(Object obj) {
 
             s=br.readLine();
             CKey ck = new CKey(array[0]);
-            System.out.println(ck.hashCode());
         }
-        }
+        }*/
 
-         /*   public static void main(String[] args) {
-        String st = new String("mayra.bena@gmail.com");
+            public static void main(String[] args) {
+        String st = new String("Siena");
         CKey ck = new CKey(st);
         System.out.println(ck.hashCode());
 
-    }*/
+    }
 
 
 }

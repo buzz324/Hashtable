@@ -20,7 +20,7 @@ public class CProcess {
             String s=br.readLine();
             String delims = ",\n";
 
-            CHashtable hs = new CHashtable(1000);
+            CHashtable hs = new CHashtable(500);
 
             while(s!=null){
 
@@ -40,12 +40,17 @@ public class CProcess {
                 hs.put(cd.getKey(),cd);
 
 
+
                 s=br.readLine();
                 //System.out.println();
             }
-           /* for (int j = 0; j<hs.arry().length;j++){
-                System.out.println(hs.arry()[j].toString());
-            }*/
+        for (int j = 0; j<hs.arry().length;j++){
+            System.out.println(hs.arry()[j]);
+            if(hs.arry()[j]==null){
+          //  System.out.println(j);
+            }
+        }
 
     }
 }
+
