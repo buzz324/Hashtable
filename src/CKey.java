@@ -79,7 +79,7 @@ public boolean equals(Object obj) {
         }*/
 
             public static void main(String[] args) {
-        String st = new String("Siena");
+        String st = new String("Albrough");
         CKey ck = new CKey(st);
         System.out.println(ck.hashCode());
 

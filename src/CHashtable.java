@@ -15,7 +15,7 @@ public class CHashtable {
     }
 
     //getter for the array
-    public CData[] arry() {
+    public CData[] array() {
         return table;
     }
 
@@ -24,6 +24,9 @@ public class CHashtable {
     //put data in the following key
     //NEED ROBUSTNESS FOR REDUNDANT CODING!!!!!!!!!!!!!
     public void put(CKey key, CData data) {
+
+        getProbes();
+        if(capacity==numberOfCData)return;;
 
         int newKeyHashCode = key.hashCode();
 
@@ -35,6 +38,8 @@ public class CHashtable {
         if(table[newKeyHashCode]==null){
 
             table[newKeyHashCode]=data;
+            numberOfCData++;
+
 
         }else {
 
@@ -47,6 +52,7 @@ public class CHashtable {
             while (table[newKeyHashCode]!=null){
 
                 newKeyHashCode++;
+                getProbes();//Increase probes by each time found a synonym
 
                 //check the hashcode hasn't exceed the max index and start prob from the start
                 if(newKeyHashCode>(capacity-1)){
@@ -55,11 +61,15 @@ public class CHashtable {
 
             }
                 table[newKeyHashCode]=data; //Found a null spot to add
+                numberOfCData++;
+
 
             }else {
                 while (table[newKeyHashCode]!=null){
 
                     newKeyHashCode++;
+                    getProbes();//Increase probes by each time found a synonym
+
 
                     //check the hashcode hasn't exceed the max index and start prob from the start
                     if(newKeyHashCode>(capacity-1)){
@@ -70,6 +80,8 @@ public class CHashtable {
 
 
             table[newKeyHashCode]=data; //Found a null spot to add
+            numberOfCData++;
+
 
         }
     }
@@ -82,6 +94,8 @@ public class CHashtable {
     public CData get(CKey ck) {
 
         int hashcode = ck.hashCode();
+        getProbes();//Increase probes by one search of the hashtable
+
         if (table[hashcode] == null) {
             return null;
         } else {
@@ -89,14 +103,17 @@ public class CHashtable {
         }
     }
 
-    //Tells how many data is stored in the hashtable
+    //Tells how many times memory has been looked up
     public int getProbes() {
-        for (int i = 0;i<table.length;i++){
-            if(table[i]!=null){
-                probes++;
-            }
-        }
+        probes++;
         return probes;
+    }
+
+    public double getLoad(){
+        double loadFactor;
+        loadFactor=numberOfCData/capacity;
+        return loadFactor;
+
     }
 
     /* public static void main(String[] args) {

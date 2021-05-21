@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,12 +43,13 @@ public class CProcess {
                 s=br.readLine();
                 //System.out.println();
             }
-        for (int j = 0; j<hs.arry().length;j++){
-            System.out.println(hs.arry()[j]);
-            if(hs.arry()[j]==null){
+        for (int j = 0; j<hs.array().length; j++){
+            //System.out.println(hs.arry()[j]);
+            if(hs.array()[j]==null){
           //  System.out.println(j);
             }
         }
+        System.out.println(hs.getLoad());
 
     }
 }
