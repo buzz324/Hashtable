@@ -13,7 +13,7 @@ public class CProcess {
 //args[2] == index of keystim
 
 
-            String file ="src/AU.csv";
+            String file ="src/CA.csv";
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String s=br.readLine();
@@ -33,24 +33,18 @@ public class CProcess {
                    // System.out.print(" "+t);
                     i++;
 
+
                 }
-                CData cd = new CData(array[0],array[1],array[2],0);//k is Integer.parseInt(args[2])
+                CData cd = new CData(array[0],array[1],array[2],2);//k is Integer.parseInt(args[2])
 
                 hs.put(cd.getKey(),cd);
-
-
 
                 s=br.readLine();
                 //System.out.println();
             }
-        for (int j = 0; j<hs.array().length; j++){
-            //System.out.println(hs.arry()[j]);
-            if(hs.array()[j]==null){
-          //  System.out.println(j);
-            }
-        }
-        System.out.println(hs.getLoad());
 
-    }
+
+            System.out.println(hs.expectedPerformance()+" "+hs.actualPerformance());
+}
 }
 

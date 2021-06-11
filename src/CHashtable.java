@@ -1,3 +1,7 @@
+//Name: Buzz Kho
+//ID: 117421
+
+
 public class CHashtable {
 
     private CData[] table;//array of CData
@@ -7,7 +11,7 @@ public class CHashtable {
 
     private int capacity;
     private int numberOfCData;
-    private int probes;
+    private int probe;
 
     public CHashtable(int cap) {
         capacity = cap;
@@ -20,131 +24,105 @@ public class CHashtable {
     }
 
 
-
     //put data in the following key
-    //NEED ROBUSTNESS FOR REDUNDANT CODING!!!!!!!!!!!!!
+    //NEED ROBUSTNESS FOR FULL ARRAY
     public void put(CKey key, CData data) {
 
-        getProbes();
-        if(capacity==numberOfCData)return;;
+        int uniqueCode;
+        uniqueCode = key.hashCode();
 
-        int newKeyHashCode = key.hashCode();
+        //Table is full
+      if(capacity==numberOfCData-1)return;
 
-        //Make sure the hashcode to stay within the index of the capacity array
-        if (newKeyHashCode>(capacity-1)){
-            newKeyHashCode=newKeyHashCode%(capacity);
-        }
+      //Make sure the hashcode to stay withing the index of table size
+      if (uniqueCode>(capacity-1)){
+          uniqueCode=uniqueCode%capacity;
+      }
 
-        if(table[newKeyHashCode]==null){
+        //Synonym
+        if (get(key) != null) {
+            uniqueCode = get(key).getKey().hashCode();
 
-            table[newKeyHashCode]=data;
-            numberOfCData++;
+            //Make sure the hashcode to stay withing the index of table size
 
+            if (uniqueCode>(capacity-1)){
+                uniqueCode=uniqueCode%capacity;
+            }
+            //Linear probing
+            while(table[uniqueCode]!=null) {
 
-        }else {
-
-
-            //Found a synonym
-            if (key.equals(table[newKeyHashCode].getKey())){
-                newKeyHashCode++;//increment to see next space availability
-
-            // Look for null space to add
-            while (table[newKeyHashCode]!=null){
-
-                newKeyHashCode++;
-                getProbes();//Increase probes by each time found a synonym
-
-                //check the hashcode hasn't exceed the max index and start prob from the start
-                if(newKeyHashCode>(capacity-1)){
-                    newKeyHashCode=0;
+                if (uniqueCode == capacity - 1) {
+                    uniqueCode = 0;
                 }
+                getProbe();
+                uniqueCode++;
 
             }
-                table[newKeyHashCode]=data; //Found a null spot to add
-                numberOfCData++;
-
-
-            }else {
-                while (table[newKeyHashCode]!=null){
-
-                    newKeyHashCode++;
-                    getProbes();//Increase probes by each time found a synonym
-
-
-                    //check the hashcode hasn't exceed the max index and start prob from the start
-                    if(newKeyHashCode>(capacity-1)){
-                        newKeyHashCode=0;
-                    }
-                }
-            }
-
-
-            table[newKeyHashCode]=data; //Found a null spot to add
+            table[uniqueCode] = data;
             numberOfCData++;
 
-
         }
+
+        //null value case
+        else {
+
+            getProbe();
+
+            //Empty space so generate one
+            table[uniqueCode] = data;
+            numberOfCData++;
+        }
+
     }
-
-
-
-
 
     //find a data in the hashtable or empty space and return that value
-    public CData get(CKey ck) {
+    public CData get(CKey key) {
 
-        int hashcode = ck.hashCode();
-        getProbes();//Increase probes by one search of the hashtable
+        //Make a hashcode based on the key passed
+        int hashcode = key.hashCode();
 
-        if (table[hashcode] == null) {
-            return null;
-        } else {
-            return table[hashcode];
+        //Make sure the hashcode to stay withing the index of table size
+        if (hashcode>(capacity-1)){
+            hashcode=hashcode%capacity;
         }
-    }
+                //Look for an empty spot, linear probing
+            while(table[hashcode]!=null){
 
-    //Tells how many times memory has been looked up
-    public int getProbes() {
-        probes++;
-        return probes;
+                //Found a CData in the table
+                if (key.equals(table[hashcode].getKey()))return table[hashcode];
+
+                if (hashcode == capacity - 1) {
+                    hashcode = 0;
+                }
+
+                //Increment to see if we have matched Cdata or null
+                hashcode++;
+
+            }
+            //Whether array element is empty or no CData found in the table
+            return null;
+
+        }
+
+
+    public int getProbe() {
+        probe++;
+        return probe;
     }
 
     public double getLoad(){
         double loadFactor;
-        loadFactor=numberOfCData/capacity;
+        loadFactor=numberOfCData/(double)capacity;
         return loadFactor;
-
     }
 
-    /* public static void main(String[] args) {
+    //Expected performance
+    public double expectedPerformance (){
+      return (1+getLoad()/2);
+    }
 
 
-        CHashtable hs = new CHashtable(100);
-
-
-            String br = "Didio,03-8174-9123,rebbecca.didio@didio.com.au";
-            String delims = ",\n";
-            StringTokenizer st = new StringTokenizer(br, delims);
-            String[] array = new String[3];
-            int i = 0;
-
-            while (st.hasMoreTokens()) {
-                String t = st.nextToken();
-
-                array[i]=t;
-                System.out.print(" " + t);
-
-                i++;
-            }
-            CData cd = new CData(array[0],array[1],array[2],0);//k is Integer.parseInt(args[2])
-            hs.put(cd.getKey(),cd);
-            for (int index=0; i<hs.arry().length;index++){
-                System.out.println(hs.arry()[index]);
-
-            }
-
-
-    }*/
-
-
+    public int actualPerformance(){
+        return getProbe()/capacity;
+    }
 }

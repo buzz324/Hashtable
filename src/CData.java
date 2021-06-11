@@ -1,6 +1,5 @@
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.util.StringTokenizer;
+//Name: Buzz Kho
+//ID: 117421
 
 public class CData {
 
@@ -35,34 +34,6 @@ public class CData {
 
         return threeElements;
     }
-
-
-/*
-    public static void main(String [] args){
-
-        try{
-
-            String file ="src/AU.csv";
-            BufferedReader br = new BufferedReader(new FileReader(file));
-
-            String s=br.readLine();
-            String delims = ",\n";
-            while(s!=null){
-                StringTokenizer st = new StringTokenizer(s,delims);
-                CData cd;
-                while(st.hasMoreTokens()){
-                    String t = st.nextToken();
-                    System.out.println(" "+t);
-
-                }
-                s=br.readLine();
-                //System.out.println();
-            }
-        }catch(Exception e){
-            System.err.println("Trouble!");
-        }
-    }
-*/
 
 
 }
