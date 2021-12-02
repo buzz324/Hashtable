@@ -30,7 +30,7 @@ overwrites the default toString() method to return a String that is the concaten
 collision resolution is done with linear probing
 
 Public method called get(CKey) that finds and returns a reference to the CData stored in the table with that key, or null if the item is not found
-put() should do nothing if it would completely fill the table at its current capacity, so there will always be at least one null element to stop a get() probe that should fail ... (note that the table would normally increase its capacity and rehash all its contents into the new locations well before it got this full, but we'll skip this operation)
+put() should do nothing if it would completely fill the table at its current capacity, so there will always be at least one null element to stop a get() probe that should fail 
 define a public method called getProbes() that returns the value of the private member variable that has been counting all probes since the table was created
 define a public method called getLoad() that returns the load factor as a double (i.e. double precision floating point number)
 
